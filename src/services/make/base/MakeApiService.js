@@ -1,5 +1,5 @@
 const { HttpClient } = require("@base/HttpClientBase");
-const { MakeWebhookUri } = require("common/contants/MakeWebhookUri");
+const { MakeWebhookUri } = require("common/constants/MakeWebhookUri");
 const { decorate, injectable } = require("inversify");
 
 class MakeApiService extends HttpClient {
@@ -10,7 +10,7 @@ class MakeApiService extends HttpClient {
     uri;
 
     constructor() {
-        super("https://hook.eu1.make.com", {})
+        super("https://hook.eu1.make.com", {});
         this.uri = MakeWebhookUri;
     }
 }
