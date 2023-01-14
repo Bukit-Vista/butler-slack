@@ -1,3 +1,5 @@
+require("reflect-metadata");
+require("module-alias/register");
 require("dotenv").config();
 
 const express = require("express");
@@ -6,11 +8,17 @@ const ticket = require("./ticket");
 const signature = require("./verifySignature");
 const api = require("./api");
 const payloads = require("./payloads");
+const { Container } = require("inversify");
+const {
+    CommandInspectionService,
+} = require("@service/slacks/command/CommandInspectionService");
+const { MakePropertyApiService } = require("@service/make/MakePropertyService");
+const { MakeApiService } = require("@service/make/base/MakeApiService");
+const { HttpClient } = require("@base/HttpClientBase");
 const debug = require("debug")("slash-command-template:index");
 
 const app = express();
 
-// Hello World
 /*
  * Parse application/x-www-form-urlencoded && application/json
  * Use body-parser's `verify` callback to export a parsed raw body
@@ -46,6 +54,23 @@ app.post("/inspection", async (req, res) => {
 
     // extract the slash command text, and trigger ID from payload
     const { trigger_id } = req.body;
+
+    const container = new Container();
+    container.bind(HttpClient.name).to(HttpClient);
+    container.bind(MakeApiService.name).to(MakeApiService);
+    container.bind(MakePropertyApiService.name).to(MakePropertyApiService);
+    container.bind(CommandInspectionService.name).to(CommandInspectionService);
+
+    /** @type {CommandInspectionService} */
+    const service = container.get(CommandInspectionService.name);
+
+    const payload = await service.payload({
+        trigger: {
+            id: req.body["trigger_id"],
+        },
+    });
+
+    console.log(payload);
 
     // create the modal payload - includes the dialog structure, Slack API token,
     // and trigger ID
