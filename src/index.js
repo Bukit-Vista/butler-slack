@@ -10,6 +10,7 @@ const debug = require('debug')('slash-command-template:index');
 
 const app = express();
 
+// Hello World
 /*
  * Parse application/x-www-form-urlencoded && application/json
  * Use body-parser's `verify` callback to export a parsed raw body
@@ -34,7 +35,7 @@ app.get('/', (req, res) => {
  * Endpoint to receive /helpdesk slash command from Slack.
  * Checks verification token and opens a dialog to capture more info.
  */
-app.post('/command', async (req, res) => {
+app.post('/inspection', async (req, res) => {
   // Verify the signing secret
   if (!signature.isVerified(req)) {
     debug('Verification token mismatch');
