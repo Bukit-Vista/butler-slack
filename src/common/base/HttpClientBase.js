@@ -36,24 +36,29 @@ class HttpClient {
             headers: this.headers,
         });
 
-        this.#initializeResponseInterceptor();
+        this.initializeResponseInterceptor();
     }
 
-    #initializeResponseInterceptor() {
+    /**
+     * @private
+     */
+    initializeResponseInterceptor() {
         this.instance.interceptors.response.use(
-            this.#handleResponse,
+            this.handleResponse,
             this.handleError,
         );
     }
 
     /**
+     * @private
      * @param {AxiosResponse} response
      */
-    #handleResponse(response) {
+    handleResponse(response) {
         return response;
     }
 
     /**
+     * @private
      * @param {any} error
      */
     handleError(error) {
