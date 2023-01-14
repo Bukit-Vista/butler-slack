@@ -1,5 +1,5 @@
 const { HttpClient } = require("@base/HttpClientBase");
-const { MakeWebhookUri } = require("common/constants/MakeWebhookUri");
+const { MakeWebhookUri } = require("@constant/MakeWebhookUri");
 const { decorate, injectable } = require("inversify");
 
 class MakeApiService extends HttpClient {

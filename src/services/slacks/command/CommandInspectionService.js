@@ -98,6 +98,6 @@ class CommandInspectionService extends SlackCommandService {
 }
 
 decorate(injectable(), CommandInspectionService);
-decorate(inject(MakePropertyApiService.name), CommandInspectionService);
+decorate(inject(MakePropertyApiService.name), CommandInspectionService, 0);
 
 module.exports = { CommandInspectionService };
