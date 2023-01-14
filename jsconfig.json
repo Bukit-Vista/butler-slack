@@ -5,6 +5,7 @@
         "baseUrl": "./src",
         "paths": {
             "@base/*": ["common/base/*"],
+            "@constant/*": ["common/constants/*"],
             "@service/*": ["services/*"],
         } 
     },
