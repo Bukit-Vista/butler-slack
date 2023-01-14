@@ -6,7 +6,7 @@ class SlackCommandService {
      * @param {Record<string, any>} values
      */
     // eslint-disable-next-line no-unused-vars
-    payload(values) {
+    async payload(values) {
         const message = `Method "payload()" must be implemented!`;
         throw new TypeError(message);
     }

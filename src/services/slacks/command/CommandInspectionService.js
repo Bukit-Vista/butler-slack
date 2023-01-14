@@ -1,6 +1,19 @@
+const { MakePropertyApiService } = require("@service/make/MakePropertyService");
+const { decorate, injectable, inject } = require("inversify");
 const { SlackCommandService } = require("../base/SlackCommandService");
 
 class CommandInspectionService extends SlackCommandService {
+    /** @private */
+    makePropertyApiService;
+
+    /**
+     * @param {MakePropertyApiService} makePropertyApiService
+     */
+    constructor(makePropertyApiService) {
+        super();
+        this.makePropertyApiService = makePropertyApiService;
+    }
+
     /**
      * @typedef  {object} ITriggerInfo
      * @property {string} id
@@ -11,7 +24,9 @@ class CommandInspectionService extends SlackCommandService {
      * @param {IInspectionPayload} values
      * @returns
      */
-    payload(values) {
+    async payload(values) {
+        const properties = await this.makePropertyApiService.getProperties();
+
         return {
             trigger_id: values.trigger.id,
             view: JSON.stringify({
@@ -26,6 +41,26 @@ class CommandInspectionService extends SlackCommandService {
                     text: "Submit",
                 },
                 blocks: [
+                    {
+                        block_id: "urgency_block",
+                        type: "input",
+                        label: {
+                            type: "plain_text",
+                            text: "Property",
+                        },
+                        element: {
+                            action_id: "urgency",
+                            type: "static_select",
+                            options: properties.map((property) => ({
+                                text: {
+                                    type: "plain_text",
+                                    text: property["property"],
+                                },
+                                value: property["rowId"],
+                            })),
+                        },
+                        optional: true,
+                    },
                     {
                         block_id: "title_block",
                         type: "input",
@@ -56,46 +91,13 @@ class CommandInspectionService extends SlackCommandService {
                         },
                         optional: true,
                     },
-                    {
-                        block_id: "urgency_block",
-                        type: "input",
-                        label: {
-                            type: "plain_text",
-                            text: "Importance",
-                        },
-                        element: {
-                            action_id: "urgency",
-                            type: "static_select",
-                            options: [
-                                {
-                                    text: {
-                                        type: "plain_text",
-                                        text: "High",
-                                    },
-                                    value: "high",
-                                },
-                                {
-                                    text: {
-                                        type: "plain_text",
-                                        text: "Medium",
-                                    },
-                                    value: "medium",
-                                },
-                                {
-                                    text: {
-                                        type: "plain_text",
-                                        text: "Low",
-                                    },
-                                    value: "low",
-                                },
-                            ],
-                        },
-                        optional: true,
-                    },
                 ],
             }),
         };
     }
 }
+
+decorate(injectable(), CommandInspectionService);
+decorate(inject(MakePropertyApiService.name), CommandInspectionService);
 
 module.exports = { CommandInspectionService };
