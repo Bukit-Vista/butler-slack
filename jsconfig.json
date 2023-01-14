@@ -1,0 +1,12 @@
+{ 
+    "compilerOptions": {
+        "target": "ES2017",
+        "moduleResolution": "Node",
+        "baseUrl": "./src",
+        "paths": {
+            "@base/*": ["common/base/*"],
+            "@service/*": ["services/*"],
+        } 
+    },
+    "exclude": ["node_modules"]
+}
