@@ -10,6 +10,7 @@ const debug = require("debug")("slash-command-template:index");
 
 const app = express();
 
+// Hello World
 /*
  * Parse application/x-www-form-urlencoded && application/json
  * Use body-parser's `verify` callback to export a parsed raw body
