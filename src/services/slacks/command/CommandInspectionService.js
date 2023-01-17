@@ -1,6 +1,6 @@
 const { MakePropertyApiService } = require("@service/make/MakePropertyService");
 const { decorate, injectable, inject } = require("inversify");
-const { Modal, Blocks } = require("slack-block-builder");
+const { Modal, Blocks, Elements } = require("slack-block-builder");
 const { SlackCommandService } = require("../base/SlackCommandService");
 
 class CommandInspectionService extends SlackCommandService {
@@ -38,12 +38,20 @@ class CommandInspectionService extends SlackCommandService {
                     blockId: "title_block",
                     label: "Title",
                     hint: "Input title",
-                }),
+                }).element(
+                    Elements.TextInput({
+                        actionId: "title",
+                    }),
+                ),
                 Blocks.Input({
                     blockId: "description_block",
                     label: "Description",
                     hint: "Input title",
-                }),
+                }).element(
+                    Elements.TextInput({
+                        actionId: "description",
+                    }),
+                ),
             )
             .buildToJSON();
         // return {
