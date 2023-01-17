@@ -46,14 +46,11 @@ app.get("/", (req, res) => {
  * Checks verification token and opens a dialog to capture more info.
  */
 app.post("/inspection", async (req, res) => {
-    // Verify the signing secret
+    //Verify the signing secret
     if (!signature.isVerified(req)) {
         debug("Verification token mismatch");
         return res.status(404).send();
     }
-
-    // extract the slash command text, and trigger ID from payload
-    const { trigger_id } = req.body;
 
     const container = new Container();
     container.bind(HttpClient.name).to(HttpClient);
@@ -72,16 +69,10 @@ app.post("/inspection", async (req, res) => {
 
     console.log(payload);
 
-    // create the modal payload - includes the dialog structure, Slack API token,
-    // and trigger ID
-    let view = payloads.modal({
-        trigger_id,
-    });
-
-    let result = await api.callAPIMethod("views.open", view);
+    let result = await api.callAPIMethod("views.open", payload);
 
     debug("views.open: %o", result);
-    return res.send("");
+    return res.sendStatus(200);
 });
 
 /*
