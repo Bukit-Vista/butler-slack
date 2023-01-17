@@ -6,7 +6,9 @@ class MakePropertyApiService extends MakeApiService {
      * @public
      */
     async getProperties() {
-        return await this.instance.get(this.uri.properties);
+        const { data } = await this.instance.get(this.uri.properties);
+
+        return data;
     }
 }
 

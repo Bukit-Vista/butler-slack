@@ -26,6 +26,7 @@
     "inversify": "^6.0.1",
     "module-alias": "^2.2.2",
     "reflect-metadata": "^0.1.13",
+    "slack-block-builder": "^2.7.2",
     "tsscmp": "^1.0.6"
   },
   "devDependencies": {
