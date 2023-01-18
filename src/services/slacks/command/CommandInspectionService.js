@@ -72,10 +72,10 @@ class CommandInspectionService extends SlackCommandService {
                             options: properties.map((property) => ({
                                 text: {
                                     type: "plain_text",
-                                    text: `*${property["property"]}*`,
+                                    text: `${property["property"]}`,
                                     emoji: true,
                                 },
-                                value: property["rowId"],
+                                value: property,
                             })),
                             action_id: "static_select-action",
                         },
