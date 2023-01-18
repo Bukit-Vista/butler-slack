@@ -56,6 +56,7 @@ class CommandInspectionService extends SlackCommandService {
                         },
                     },
                     {
+                        block_id: "select_property",  
                         type: "section",
                         text: {
                             type: "mrkdwn",
@@ -83,6 +84,7 @@ class CommandInspectionService extends SlackCommandService {
                         type: "divider",
                     },
                     {
+                        block_id: "select_status",
                         type: "section",
                         text: {
                             type: "mrkdwn",
@@ -99,7 +101,7 @@ class CommandInspectionService extends SlackCommandService {
                                 {
                                     text: {
                                         type: "plain_text",
-                                        text: "*High risk*",
+                                        text: "High risk",
                                         emoji: true,
                                     },
                                     value: "High risk",
@@ -107,7 +109,7 @@ class CommandInspectionService extends SlackCommandService {
                                 {
                                     text: {
                                         type: "plain_text",
-                                        text: "*Medium risk*",
+                                        text: "Medium risk",
                                         emoji: true,
                                     },
                                     value: "Medium risk",
@@ -115,7 +117,7 @@ class CommandInspectionService extends SlackCommandService {
                                 {
                                     text: {
                                         type: "plain_text",
-                                        text: "*Low risk*",
+                                        text: "Low risk",
                                         emoji: true,
                                     },
                                     value: "Low risk",
@@ -123,7 +125,7 @@ class CommandInspectionService extends SlackCommandService {
                                 {
                                     text: {
                                         type: "plain_text",
-                                        text: "*No risk*",
+                                        text: "No risk",
                                         emoji: true,
                                     },
                                     value: "No risk",
@@ -133,6 +135,7 @@ class CommandInspectionService extends SlackCommandService {
                         },
                     },
                     {
+                        block_id: "description",
                         type: "input",
                         label: {
                             type: "plain_text",
@@ -142,9 +145,25 @@ class CommandInspectionService extends SlackCommandService {
                         element: {
                             type: "plain_text_input",
                             multiline: true,
+                            action_id: "description"
                         },
                         optional: false,
                     },
+                    {
+                      block_id: "channel_select",
+                      type: "input",
+                      optional: true,
+                      label: {
+                        "type": "plain_text",
+                        "text": "Select a channel to post the result on"
+                      },
+                      element: {
+                        "action_id": "channel_select",
+                        "type": "conversations_select",
+                        "response_url_enabled": true,
+                        "default_to_current_conversation": true
+                      }
+                    }
                 ],
             }),
         };
