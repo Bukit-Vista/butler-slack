@@ -7,7 +7,6 @@ const bodyParser = require("body-parser");
 const ticket = require("./ticket");
 const signature = require("./verifySignature");
 const api = require("./api");
-const payloads = require("./payloads");
 const { Container } = require("inversify");
 const {
     CommandInspectionService,
@@ -67,12 +66,10 @@ app.post("/inspection", async (req, res) => {
         },
     });
 
-    console.log(payload);
-
     let result = await api.callAPIMethod("views.open", payload);
 
     debug("views.open: %o", result);
-    return res.sendStatus(200);
+    res.send("");
 });
 
 /*

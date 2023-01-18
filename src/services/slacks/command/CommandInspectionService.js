@@ -1,6 +1,6 @@
 const { MakePropertyApiService } = require("@service/make/MakePropertyService");
 const { decorate, injectable, inject } = require("inversify");
-const { Modal, Blocks, Elements } = require("slack-block-builder");
+const { Blocks, Elements, Modal, Option } = require("slack-block-builder");
 const { SlackCommandService } = require("../base/SlackCommandService");
 
 class CommandInspectionService extends SlackCommandService {
@@ -26,6 +26,8 @@ class CommandInspectionService extends SlackCommandService {
      * @returns
      */
     async payload(values) {
+        const properties = await this.makePropertyApiService.getProperties();
+
         return {
             ["trigger_id"]: values.trigger.id,
             view: Modal({
@@ -50,6 +52,21 @@ class CommandInspectionService extends SlackCommandService {
                         Elements.TextInput({
                             actionId: "description",
                         }),
+                    ),
+                    Blocks.Input({
+                        blockId: "properties_block",
+                        label: "Property",
+                    }).element(
+                        Elements.StaticSelect({
+                            actionId: "properties",
+                        }).options(
+                            properties.map((property) =>
+                                Option({
+                                    text: property["property"],
+                                    value: property["rowId"],
+                                }),
+                            ),
+                        ),
                     ),
                 )
                 .buildToJSON(),
