@@ -75,7 +75,7 @@ class CommandInspectionService extends SlackCommandService {
                                     text: `${property["property"]}`,
                                     emoji: true,
                                 },
-                                value: property,
+                                value: property["rowId"],
                             })),
                             action_id: "static_select-action",
                         },
