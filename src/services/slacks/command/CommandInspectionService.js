@@ -29,7 +29,7 @@ class CommandInspectionService extends SlackCommandService {
 
         return {
             ["trigger_id"]: values.trigger.id,
-            view: {
+            view: JSON.stringify({
                 title: {
                     type: "plain_text",
                     text: "QC Inspection",
@@ -146,7 +146,7 @@ class CommandInspectionService extends SlackCommandService {
                         optional: false,
                     },
                 ],
-            },
+            }),
         };
     }
 }
