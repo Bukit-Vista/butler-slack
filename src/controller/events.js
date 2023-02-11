@@ -3,6 +3,7 @@ const { createMessage: createMessageService } = require("./../services/events/cr
 async function events(req, res) {
   const body = req.body;
 
+  console.log(body)
   switch (body.action) {
     case "notes.insert":
       await createMessageService(body)

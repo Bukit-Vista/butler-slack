@@ -3,6 +3,7 @@ const api = require("./../../api")
 const payloads = require("./../../payloads")
 
 async function createMessage(reqBody) {
+  console.log(reqBody);
   if (reqBody.user?.type !== "partner") {
     return
   }
