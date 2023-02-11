@@ -1,24 +1,24 @@
-const env = require("./../../env")
-const api = require("./../../api")
-const payloads = require("./../../payloads")
+const env = require("./../../env");
+const api = require("./../../api");
+const payloads = require("./../../payloads");
 
 async function createMessage(reqBody) {
-  console.log(reqBody);
-  if (reqBody.user?.type !== "partner") {
-    return
-  }
+    console.log(reqBody);
+    if (reqBody.user?.type !== "partner") {
+        return;
+    }
 
-  const payloadAPI = payloads.newMessage({
-    channelID: env.dispatchChannelID,
-    reqBody
-  })
+    const payloadAPI = payloads.newMessage({
+        channelID: env.dispatchChannelID,
+        reqBody,
+    });
 
-  let slackRes = await api.callAPIMethod('chat.postMessage', payloadAPI)
+    let slackRes = await api.callAPIMethod("chat.postMessage", payloadAPI);
 
-  if (!slackRes.ok) {
-    console.log(slackRes)
-    return
-  }
+    if (!slackRes.ok) {
+        console.log(slackRes);
+        return;
+    }
 }
 
-module.exports = { createMessage }
+module.exports = { createMessage };

@@ -1,10 +1,10 @@
 // Exporting all controller files
-const events = require("./events")
-const actions = require("./actions")
+const events = require("./events");
+const actions = require("./actions");
 
 const controller = {
-  events,
-  actions
-}
+    events,
+    actions,
+};
 
-module.exports = controller
+module.exports = controller;

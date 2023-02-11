@@ -1,16 +1,18 @@
-const { createMessage: createMessageService } = require("./../services/events/create_message")
+const {
+    createMessage: createMessageService,
+} = require("./../services/events/create_message");
 
 async function events(req, res) {
-  const body = req.body;
+    const body = req.body;
 
-  console.log(body)
-  switch (body.action) {
-    case "notes.insert":
-      await createMessageService(body)
-      break
-  }
+    console.log("event: ", body.action);
+    switch (body.action) {
+        case "notes.insert":
+            await createMessageService(body);
+            break;
+    }
 
-  res.send(body.challenge);
+    res.send(body.challenge);
 }
 
-module.exports = events
+module.exports = events;

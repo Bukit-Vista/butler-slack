@@ -4,19 +4,7 @@ require("dotenv").config();
 
 const express = require("express");
 const bodyParser = require("body-parser");
-const ticket = require("./ticket");
-const signature = require("./verifySignature");
-const api = require("./api");
-const payload = require("./payloads")
-const controller = require("./controller/index")
-const { Container } = require("inversify");
-const {
-  CommandInspectionService,
-} = require("@service/slacks/command/CommandInspectionService");
-const { MakePropertyApiService } = require("@service/make/MakePropertyService");
-const { MakeApiService } = require("@service/make/base/MakeApiService");
-const { HttpClient } = require("@base/HttpClientBase");
-const debug = require("debug")("slash-command-template:index");
+const controller = require("./controller/index");
 
 const app = express();
 
@@ -27,68 +15,40 @@ const app = express();
  */
 
 const rawBodyBuffer = (req, res, buf, encoding) => {
-  if (buf && buf.length) {
-    req.rawBody = buf.toString(encoding || "utf8");
-  }
+    if (buf && buf.length) {
+        req.rawBody = buf.toString(encoding || "utf8");
+    }
 };
 
 app.use(bodyParser.urlencoded({ verify: rawBodyBuffer, extended: true }));
 app.use(bodyParser.json({ verify: rawBodyBuffer }));
+app.use((req, res, next) => {
+    console.log("Request: ", req.url);
+
+    // Verify the signing secret
+    // if (!signature.isVerified(req)) {
+    //     debug("Verification token mismatch");
+    //     return res.status(404).send();
+    // }
+    next();
+});
 
 app.get("/", (req, res) => {
-  res.send(
-    "<h2>The Slash Command and Dialog app is running</h2> <p>Follow the" +
-    " instructions in the README to configure the Slack App and your environment variables.</p>",
-  );
+    res.send(
+        "<h2>The Slash Command and Dialog app is running</h2> <p>Follow the" +
+            " instructions in the README to configure the Slack App and your environment variables.</p>",
+    );
 });
 
-/*
- * Endpoint to receive /helpdesk slash command from Slack.
- * Checks verification token and opens a dialog to capture more info.
- */
-app.post("/inspection", async (req, res) => {
-  //Verify the signing secret
-  if (!signature.isVerified(req)) {
-    debug("Verification token mismatch");
-    return res.status(404).send();
-  }
-
-  const container = new Container();
-  container.bind(HttpClient.name).to(HttpClient);
-  container.bind(MakeApiService.name).to(MakeApiService);
-  container.bind(MakePropertyApiService.name).to(MakePropertyApiService);
-  container.bind(CommandInspectionService.name).to(CommandInspectionService);
-
-  /** @type {CommandInspectionService} */
-  const service = container.get(CommandInspectionService.name);
-
-  const payload = await service.payload({
-    trigger: {
-      id: req.body["trigger_id"],
-    },
-  });
-
-  let result = await api.callAPIMethod("views.open", payload);
-
-  debug("views.open: %o", result);
-  res.send("");
-});
-
-/*
- * Endpoint to receive the dialog submission. Checks the verification token
- * and creates a Helpdesk ticket
- */
+// Routes
 app.post("/events", controller.events);
+app.post("/actions", controller.actions);
 
-/*
- * Endpoint for handle callback from Slack
- */
-app.post("/actions", controller.actions)
-
+// Start the server
 const server = app.listen(process.env.PORT || 5000, () => {
-  console.log(
-    "Express server listening on port %d in %s mode",
-    server.address().port,
-    app.settings.env,
-  );
+    console.log(
+        `Express server listening on port ${server.address().port} in ${
+            app.settings.env
+        } mode`,
+    );
 });
