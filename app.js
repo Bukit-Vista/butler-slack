@@ -44,5 +44,5 @@ receiver.router.post('/events', (req, res) => { res.end('Ok'); webhook.notesWebh
   // Start your app
   await app.start(process.env.PORT || 3000);
 
-  console.log('⚡️ Bolt app is running!');
+  console.log('⚡️ Bolt app is running!', app.receiver.server._connectionKey);
 })();
