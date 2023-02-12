@@ -9,7 +9,7 @@ module.exports = {
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": `*${data.user.name}* • ${data.user.role}\n${data.comment.text}`
+                    "text": "_New message received on BV Go_"
                 }
             },
             {
@@ -20,6 +20,16 @@ module.exports = {
                         "text": `:house: ${data.user.type} | 📖 ${data.booking.id} | 🔗 <https://bigrr.bukitvista.com/guest-checkin-list/${data.booking.id}/messages|BIGRR>`
                     }
                 ]
+            },
+            {
+                "type": "divider"
+            },
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": `*${data.user.name}* • ${data.user.role}\n${data.comment.text}`
+                }
             },
             {
                 "type": "divider"
