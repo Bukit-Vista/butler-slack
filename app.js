@@ -37,7 +37,7 @@ app.error((error) => {
 });
 
 // Listens to incoming webhooks
-receiver.router.get('/', (req, res) => { res.end('Ok'); });
+receiver.router.get('/', (req, res) => { res.end('⚡ Bolt app is running!'); });
 receiver.router.post('/events', (req, res) => { res.end('Ok'); webhook.notesWebhook(req, app) });
 
 (async () => {
