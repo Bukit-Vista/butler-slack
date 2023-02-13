@@ -17,7 +17,7 @@ module.exports = {
                 "elements": [
                     {
                         "type": "mrkdwn",
-                        "text": `:house: ${data.user.type} | 📖 ${data.booking.id} | 🔗 <https://bigrr.bukitvista.com/guest-checkin-list/${data.booking.id}/messages|BIGRR>`
+                        "text": `:house: ${data.user.type} | 📖 ${data.booking.id} | 🔗 <${process.env.BIGRR_FE_BASE_URL}/guest-checkin-list/${data.booking.id}/messages|BIGRR>`
                     }
                 ]
             },
