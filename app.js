@@ -25,7 +25,7 @@ const app = new App({
 });
 
 // Listens to incoming messages
-app.message('hello', message.messageFromPartner);
+// app.message('hello', message.messageFromPartner);
 
 // Listens to actions
 app.action({ block_id: 'message_action', action_id: 'reply_message' }, actions.replyMessage);
@@ -52,5 +52,5 @@ receiver.router.post('/events', (req, res) => { webhook.events(req, res, app) })
   // Start your app
   await app.start(process.env.PORT || 3000);
 
-  console.log('Bolt app is running!', app.receiver.server._connectionKey);
+  console.log('⚡ Bolt app is running!', app.receiver.server._connectionKey);
 })();

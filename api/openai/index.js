@@ -16,7 +16,7 @@ module.exports = {
                 messages: messages,
             });
             const response = completion.data.choices[0].message.content.trim();
-            console.log('chat', response);
+            console.log('[OPENAI]', 'chat', response);
             return response;
         } catch (error) {
             console.log('chat', error);

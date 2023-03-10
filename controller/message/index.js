@@ -1,7 +1,9 @@
 const { messageFromPartner } = require('./messageFromPartner');
+const { createNewTag } = require('./createNewTag');
 
 const message = {
-    messageFromPartner
+    messageFromPartner,
+    createNewTag
 }
 
 module.exports = message;

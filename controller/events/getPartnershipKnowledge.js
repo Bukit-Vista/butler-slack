@@ -13,7 +13,7 @@ module.exports = {
                         "type": "section",
                         "text": {
                             "type": "mrkdwn",
-                            "text": "```" + response.answer + "```"
+                            "text": response.answer
                         }
                     },
                     {
