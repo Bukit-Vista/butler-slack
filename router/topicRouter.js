@@ -1,5 +1,6 @@
 const middleware = require('../middleware');
 const controller = require('../controller');
+const coda = require('../api/coda');
 
 module.exports = {
     topicRouter: async (payload) => {
@@ -24,7 +25,7 @@ module.exports = {
                     controller.events.getPartnershipKnowledge(payload);
                     break;
                 case 'coda-har-guideline':
-                    controller.events.getKnowledge(payload);
+                    controller.events.getHarGeneralKnowledge(payload);
                     break;
                 case 'unknown':
                     break;

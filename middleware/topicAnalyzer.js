@@ -49,6 +49,17 @@ module.exports = {
             },
             {
                 role: "user",
+                content: "How to request a working desk? <@U04MFEQ4MK9>"
+            },
+            {
+                role: "assistant",
+                content: JSON.stringify({
+                    tag: 'working-desk',
+                    id: 0,
+                })
+            },
+            {
+                role: "user",
                 content: question
             }
         ]

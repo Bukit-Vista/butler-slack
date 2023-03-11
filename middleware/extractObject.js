@@ -67,12 +67,12 @@ module.exports = {
             try {
                 const result = JSON.parse(gpt);
 
-                // Filter objects based on the returned tag ID
-                const filteredObjects = await objects.filter(object => object.object_id === result.object_id);
-
-                object = filteredObjects[0];
+                object = result;
             } catch (e) {
-                object = null
+                object = {
+                    object_id: 'unknown',
+                    object_name: 'unknown'
+                }
             }
         }
 

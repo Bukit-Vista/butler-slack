@@ -15,8 +15,7 @@ module.exports = {
                 data: {
                     question: body.event.text,
                     tag_id: body.topic.id,
-                    object_type: body.object.object_type,
-                    object_id: body.object.object_id,
+                    object_name: body.object.object_name,
                 }
             });
             const answer = response.data;

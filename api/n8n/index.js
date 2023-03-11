@@ -17,7 +17,8 @@ module.exports = {
             console.log("getPartnershipKnowledge", 'response', answer)
             return answer;
         } catch (error) {
-            console.error(error);
+            console.error('getPartnershipKnowledge API', error);
+            return false;
         }
     }
 }
