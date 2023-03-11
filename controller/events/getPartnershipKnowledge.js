@@ -10,7 +10,7 @@ module.exports = {
             if (response) {
                 return {
                     text: response.answer,
-                    link: response.source
+                    link: response.link
                 }
             } else {
                 return {

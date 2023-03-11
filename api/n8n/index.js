@@ -20,7 +20,7 @@ module.exports = {
             console.error('[n8n]', 'getPartnershipKnowledge Error', error.code);
             return {
                 answer: `N8n error: ${error.code}`,
-                source: ""
+                link: ""
             };
         }
     }
