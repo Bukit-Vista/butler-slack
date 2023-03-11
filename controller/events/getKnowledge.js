@@ -17,7 +17,7 @@ module.exports = {
                 }
             } else {
                 return {
-                    text: response.msg,
+                    text: `Osai error: ${response.msg}`,
                     link: ''
                 }
             }

@@ -19,7 +19,7 @@ module.exports = {
         } catch (error) {
             console.error('[n8n]', 'getPartnershipKnowledge Error', error.code);
             return {
-                answer: error.code,
+                answer: `N8n error: ${error.code}`,
                 source: ""
             };
         }

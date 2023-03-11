@@ -78,6 +78,10 @@ module.exports = {
             }
         } catch (error) {
             console.error(error);
+            return {
+                text: `Coda error: ${answer}`,
+                link: ''
+            }
         }
     }
 }
