@@ -8,54 +8,22 @@ module.exports = {
         try {
             const response = await n8n.getPartnershipKnowledge(payload.body);
             if (response) {
-                await payload.say({
-                    thread_ts: payload.body.event.ts,
+                return {
                     text: response.answer,
-                    blocks: [
-                        {
-                            "type": "section",
-                            "text": {
-                                "type": "mrkdwn",
-                                "text": response.answer
-                            }
-                        },
-                        {
-                            "type": "context",
-                            "elements": [
-                                {
-                                    "type": "mrkdwn",
-                                    "text": "`" + topic.tag + "` " + `<${response.source}|${topic.knowledge_source}>`
-                                }
-                            ]
-                        }
-                    ]
-                })
+                    link: response.source
+                }
             } else {
-                await payload.say({
-                    thread_ts: payload.body.event.ts,
-                    text: "Something went wrong.",
-                    blocks: [
-                        {
-                            "type": "section",
-                            "text": {
-                                "type": "mrkdwn",
-                                "text": "Something went wrong."
-                            }
-                        },
-                        {
-                            "type": "context",
-                            "elements": [
-                                {
-                                    "type": "mrkdwn",
-                                    "text": "`" + topic.tag + "` " + "`" + topic.knowledge_source + "` "
-                                }
-                            ]
-                        }
-                    ]
-                })
+                return {
+                    text: `Error ${response.code}`,
+                    link: ""
+                }
             }
         } catch (error) {
             console.error(error);
+            return {
+                text: `Error: ${error}`,
+                link: ""
+            }
         }
     }
 }

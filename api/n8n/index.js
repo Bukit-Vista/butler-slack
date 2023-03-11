@@ -2,7 +2,7 @@ const axios = require("axios");
 
 module.exports = {
     getPartnershipKnowledge: async function (body) {
-        console.log("getPartnershipKnowledge", 'api')
+        console.log('[n8n]', "getPartnershipKnowledge", 'api')
         try {
             const response = await axios({
                 method: "post",
@@ -14,11 +14,14 @@ module.exports = {
                 data: body
             });
             const answer = response.data;
-            console.log("getPartnershipKnowledge", 'response', answer)
+            console.log('[n8n]', "getPartnershipKnowledge", 'response', answer)
             return answer;
         } catch (error) {
-            console.error('getPartnershipKnowledge API', error);
-            return false;
+            console.error('[n8n]', 'getPartnershipKnowledge Error', error.code);
+            return {
+                answer: error.code,
+                source: ""
+            };
         }
     }
 }

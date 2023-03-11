@@ -12,6 +12,7 @@ module.exports = {
             payload.logger.info('topicRouter', topic.tag, topic.knowledge_source);
 
             // Switch on the action type
+
             switch (topic.knowledge_source) {
                 case 'airbnb-listing':
                     // Extract object from message and attach to payload
@@ -19,19 +20,22 @@ module.exports = {
                     payload.body.object = object;
 
                     // Get knowledge from database
-                    controller.events.getKnowledge(payload);
+                    answer = await controller.events.getKnowledge(payload);
                     break;
                 case 'trello-partnership':
-                    controller.events.getPartnershipKnowledge(payload);
+                    answer = await controller.events.getPartnershipKnowledge(payload);
                     break;
                 case 'coda-har-guideline':
-                    controller.events.getHarGeneralKnowledge(payload);
+                    answer = await controller.events.getHarGeneralKnowledge(payload);
                     break;
                 case 'unknown':
                     break;
                 default:
                     break;
             }
+
+            // Send reply message
+            await controller.message.sendReply(payload, answer);
         } else {
 
             // Offer user to create new topic

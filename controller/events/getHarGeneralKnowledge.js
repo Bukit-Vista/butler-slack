@@ -72,30 +72,10 @@ module.exports = {
             // Componse more explanatory answer using openAI
             const answer = await openai.betterAnswer(payload.body.event.text, rowMatch.answer);
 
-
-            // Send response to user
-            await payload.say({
-                thread_ts: payload.body.event.ts,
+            return {
                 text: answer,
-                blocks: [
-                    {
-                        "type": "section",
-                        "text": {
-                            "type": "mrkdwn",
-                            "text": answer
-                        }
-                    },
-                    {
-                        "type": "context",
-                        "elements": [
-                            {
-                                "type": "mrkdwn",
-                                "text": "`" + payload.body.topic.tag + "` " + `<${rowMatch.browserLink}|${payload.body.topic.knowledge_source}>`
-                            }
-                        ]
-                    }
-                ]
-            })
+                link: rowMatch.browserLink
+            }
         } catch (error) {
             console.error(error);
         }

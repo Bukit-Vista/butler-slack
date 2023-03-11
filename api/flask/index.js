@@ -15,6 +15,7 @@ module.exports = {
                 data: {
                     question: body.event.text,
                     tag_id: body.topic.id,
+                    object_type: 1,
                     object_name: body.object.object_name,
                 }
             });
