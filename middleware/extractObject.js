@@ -29,7 +29,7 @@ module.exports = {
             "You will reply to the user with a JSON object **and nothing more**",
             "Your response is a JSON object. This object will contain:",
             "'object_name' key, which is the name of object of the question that you've found.",
-            "'object_id' key which is an integer of the ID of the object.",
+            "'object_id' key which is a string of the ID of the object.",
             "Your response will **always** the object from the supplied list of objects",
             "If the tag is not in the list of objects, you will reply with object_id: 0, object_name: 'unknown', and object_id: 'unknown'",
             "Your response will **never** contain just a text message, it will always contain a JSON object",
@@ -48,7 +48,7 @@ module.exports = {
             {
                 role: "assistant",
                 content: JSON.stringify({
-                    object_id: 206,
+                    object_id: '206',
                     object_name: 'Kembang Kuning - 02 (downstairs)'
                 })
             },
@@ -57,9 +57,27 @@ module.exports = {
                 content: question
             }
         ]
-        // Send message to chatGPT to get tag and ID
-        const object = await openai.chat(messages);
 
-        return JSON.parse(object);
+        // Send message to chatGPT to get tag and ID
+        const gpt = await openai.chat(messages);
+
+        // Attach tag and ID to message.topic and handle if JSON is not valid
+        let object = null;
+        if (gpt) {
+            try {
+                const result = JSON.parse(gpt);
+
+                // Filter objects based on the returned tag ID
+                const filteredObjects = await objects.filter(object => object.object_id === result.object_id);
+
+                object = filteredObjects[0];
+            } catch (e) {
+                object = null
+            }
+        }
+
+        payload.logger.info('extractObject', object);
+
+        return object;
     }
 }
