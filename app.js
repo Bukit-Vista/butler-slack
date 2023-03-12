@@ -25,11 +25,11 @@ const app = new App({
 });
 
 // Listens to incoming messages
+// app.message('hello', message.messageFromPartner);
 app.message(middleware.noOrphanMessage, middleware.topicAnalyzer, router.topicRouter);
 
 // Listens to actions
-app.action({ block_id: 'message_action', action_id: 'reply_message' }, actions.replyMessage);
-app.action({ block_id: 'message_action', action_id: 'ignore_message' }, actions.ignoreMessage);
+app.action({ type: 'block_actions' }, router.actionRouter);
 
 // Listens to view submissions
 app.view({ callback_id: "reply_message" }, views.submitReplyMessage);

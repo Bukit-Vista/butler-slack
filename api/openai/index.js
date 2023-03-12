@@ -23,6 +23,23 @@ module.exports = {
             return {};
         }
     },
+    davinci: async (prompt) => {
+
+        // console.log('davinci', prompt);
+        try {
+            const completion = await openai.createCompletion({
+                model: "text-davinci-003",
+                temperature: 0.0,
+                promp: prompt,
+            });
+            const response = completion.data.choices[0].text.trim();
+            console.log('[OPENAI]', 'davinci', response);
+            return response;
+        } catch (error) {
+            console.log('[OPENAI]', 'davinci', error);
+            return {};
+        }
+    },
     betterAnswer: async (question, answer) => {
         // Compose better answer with tone and context
 

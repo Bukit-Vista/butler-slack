@@ -15,10 +15,6 @@ module.exports = {
 
             switch (topic.knowledge_source) {
                 case 'airbnb-listing':
-                    // Extract object from message and attach to payload
-                    const object = await middleware.extractObject(payload);
-                    payload.body.object = object;
-
                     // Get knowledge from database
                     answer = await controller.events.getKnowledge(payload);
                     break;
