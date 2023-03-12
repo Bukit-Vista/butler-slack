@@ -1,7 +1,9 @@
 const { submitReplyMessage } = require('./submitReplyMessage');
+const { showInspectionDetails } = require('./showInspectionDetails');
 
 const views = {
-    submitReplyMessage
+    submitReplyMessage,
+    showInspectionDetails
 }
 
 module.exports = views;

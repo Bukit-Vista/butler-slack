@@ -2,7 +2,13 @@ const axios = require("axios");
 
 module.exports = {
     questionAnswer: async function (body) {
-        console.log('[FLASK]', "questionAnswer", 'api')
+
+        const data = {
+            question: body.event.text,
+            tag_id: body.topic.id,
+            knowledge_source: body.topic.knowledge_source,
+        }
+        console.log('[FLASK]', "questionAnswer", data)
         try {
             const response = await axios({
                 method: "post",
@@ -12,11 +18,7 @@ module.exports = {
                     "user-id": process.env.FLASK_USER_ID,
                     "token": process.env.FLASK_USER_TOKEN
                 },
-                data: {
-                    question: body.event.text,
-                    tag_id: body.topic.id,
-                    knowledge_source: body.topic.knowledge_source,
-                }
+                data: data
             });
             const answer = response.data;
             console.log("questionAnswer", 'response', answer)

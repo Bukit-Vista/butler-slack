@@ -10,15 +10,16 @@ module.exports = {
                 const data = response.data[0];
 
                 if (data.knowledge_found) {
-                    return {
-                        text: data.answer,
-                        link: data.object_id
-                    }
+                    return data
                 }
             } else {
                 return {
-                    text: `Osai error: ${response.msg}`,
-                    link: ''
+                    answer: `Osai error: ${response.msg}`,
+                    knowledge_source_name: "",
+                    object_type: "",
+                    object_name: "",
+                    tag: "",
+                    link: ""
                 }
             }
 

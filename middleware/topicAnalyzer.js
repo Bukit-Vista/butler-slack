@@ -11,7 +11,8 @@ module.exports = {
         const topics = await database.query(`SELECT
         kbt.id,
         kbt.tag,
-        ks.name as knowledge_source,
+        kbt.knowledge_source,
+        ks.name as knowledge_source_name,
         kot.object as object_type
         FROM knowledge_base_tags kbt
         JOIN knowledge_sources ks ON ks.id = kbt.knowledge_source

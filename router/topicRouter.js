@@ -9,11 +9,11 @@ module.exports = {
 
         // If topic is not undefined
         if (topic) {
-            payload.logger.info('topicRouter', topic.tag, topic.knowledge_source);
+            payload.logger.info('topicRouter', topic.tag, topic.knowledge_source_name);
 
             // Switch on the action type
 
-            switch (topic.knowledge_source) {
+            switch (topic.knowledge_source_name) {
                 case 'airbnb-listing':
                     // Get knowledge from database
                     answer = await controller.events.getKnowledge(payload);

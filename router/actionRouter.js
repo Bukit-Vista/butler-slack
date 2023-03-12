@@ -7,9 +7,9 @@ module.exports = {
     actionRouter: async (payload) => {
         payload.logger.info('actionRouter', payload.payload.action_id)
 
-
         // Switch on action_id
         const action_id = payload.payload.action_id.split(':')[0];
+        const action_id_type = payload.payload.action_id.split(':')[1];
         switch (action_id) {
             case 'reply_message':
                 actions.replyMessage(payload);
@@ -24,7 +24,17 @@ module.exports = {
                 actions.ignoreMessage(payload);
                 break;
             case 'views.open':
-                actions.ignoreMessage(payload);
+                const loading_modal = await controller.actions.loadingModal(payload);
+
+                // Switch on action_id_type
+                switch (action_id_type) {
+                    case 'inspection_details':
+                        await controller.views.showInspectionDetails(payload, loading_modal);
+                        break;
+                    default:
+                        break;
+                }
+
                 break;
             case 'views.update':
                 actions.ignoreMessage(payload);

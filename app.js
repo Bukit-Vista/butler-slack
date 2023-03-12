@@ -25,7 +25,7 @@ const app = new App({
 });
 
 // Listens to incoming messages
-// app.message('hello', message.messageFromPartner);
+app.message('hello', message.testMessage);
 app.message(middleware.noOrphanMessage, middleware.topicAnalyzer, router.topicRouter);
 
 // Listens to actions
