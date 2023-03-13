@@ -6,7 +6,7 @@ module.exports = {
         try {
             const response = await flask.questionAnswer(payload.body);
 
-            if (!response.error) {
+            if (response && !response.error) {
                 const data = response.data[0];
 
                 if (data.knowledge_found) {
