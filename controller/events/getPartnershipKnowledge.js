@@ -6,9 +6,6 @@ module.exports = {
     getPartnershipKnowledge: async function (payload) {
         payload.logger.info("getPartnershipKnowledge", 'start')
 
-        // Get the cards on the board
-        // const cards = await trello.searchCardOnBoard(process.env.TRELLO_PARTNERSHIP_BOARD_ID,);
-
         const topic = payload.body.topic;
         payload.logger.info("getPartnershipKnowledge", 'controller')
         try {

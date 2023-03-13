@@ -5,6 +5,7 @@ const { sendReply } = require('./sendReply');
 const { testMessage } = require('./testMessage');
 const { loadingMessage, loadingFinishedMessage } = require('./loadingMessage');
 const { addKnowledge } = require('./addKnowledge');
+const { sendSuccessSubmitMessage } = require('./sendSuccessSubmitMessage');
 
 const message = {
     messageFromPartner,
@@ -14,7 +15,8 @@ const message = {
     testMessage,
     loadingMessage,
     loadingFinishedMessage,
-    addKnowledge
+    addKnowledge,
+    sendSuccessSubmitMessage
 }
 
 module.exports = message;

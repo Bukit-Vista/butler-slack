@@ -8,6 +8,10 @@ module.exports = {
         // Get knowledge sources from database
         const knowledge_sources = await database.getKnowledgeSources();
         data.knowledge_sources = knowledge_sources;
+        data.private_metadata = JSON.stringify({
+            ts: payload.body.message.ts,
+            channel: payload.body.channel.id,
+        });
         payload.logger.info('[Views]', "addKnowledge");
 
         try {

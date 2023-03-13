@@ -14,6 +14,7 @@ module.exports = {
 
         const view = {
             "type": "modal",
+            "private_metadata": `${data.private_metadata}`,
             "submit": {
                 "type": "plain_text",
                 "text": "Submit",

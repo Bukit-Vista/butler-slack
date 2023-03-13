@@ -1,6 +1,6 @@
 const axios = require("axios");
-var Trello = require("trello");
-var trello = new Trello(process.env.TRELLO_API_KEY, process.env.TRELLO_API_TOKEN);
+const Trello = require("trello");
+const trello = new Trello(process.env.TRELLO_API_KEY, process.env.TRELLO_API_TOKEN);
 
 module.exports = {
     getCardsOnBoard: async function (board_id) {
@@ -31,6 +31,23 @@ module.exports = {
                 });
 
 
+        } catch (error) {
+            console.error(error);
+        }
+    },
+    addCard: async function (data) {
+        console.log('[Trello]', "addCard", data.title)
+
+        try {
+            const card = await trello.addCard(data.title, data.description, data.list_id)
+                .then((trelloCard) => {
+                    console.log('[Trello]', "addCard", 'Added card:', trelloCard.id);
+                    return trelloCard;
+                });
+            return {
+                success: true,
+                data: card
+            };
         } catch (error) {
             console.error(error);
         }
