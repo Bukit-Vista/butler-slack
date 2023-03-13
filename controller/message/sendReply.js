@@ -7,9 +7,8 @@ module.exports = {
 
         let answerSchema = object({
             answer: string().required(),
-            knowledge_source: string().required(),
-            object_type: string().required(),
-            object_name: string().required(),
+            knowledge_source: string(),
+            object_name: string(),
             tag: string().required(),
             link: string()
         });
@@ -21,8 +20,9 @@ module.exports = {
         if (validAnswer) {
             const context = [
                 "`" + answer.tag + "`",
-                "`" + answer.object_name + "`",
-                (answer.link ? `\n<${answer.link}|${answer.knowledge_source}>` : "\n*" + answer.knowledge_source + "*")
+                (answer.object_name ? "`" + answer.object_name + "`" : ""),
+                (answer.link && answer.knowledge_source ? `\n<${answer.link}|${answer.knowledge_source}>` : ""),
+                (!answer.link && answer.knowledge_source ? "\n*" + answer.knowledge_source + "*" : "")
             ]
             await payload.say({
                 thread_ts: payload.body.event.ts,

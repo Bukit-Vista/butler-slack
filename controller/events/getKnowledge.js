@@ -18,13 +18,13 @@ module.exports = {
                     knowledge_source_name: "",
                     object_type: "",
                     object_name: "",
-                    tag: "",
+                    tag: payload.body.topic.tag,
                     link: ""
                 }
             }
 
         } catch (error) {
-            console.error(error);
+            console.error(error.response);
         }
     }
 }

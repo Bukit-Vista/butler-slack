@@ -24,7 +24,11 @@ module.exports = {
             console.log("questionAnswer", 'response', answer)
             return answer;
         } catch (error) {
-            console.error(error);
+            console.error('questionAnswer error', error.response.statusText);
+            return {
+                error: true,
+                msg: error.response.statusText
+            }
         }
     }
 }
