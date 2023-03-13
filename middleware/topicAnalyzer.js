@@ -9,16 +9,7 @@ module.exports = {
         payload.logger.info('topicAnalyzer', question);
 
         // Fetch list of available topics
-        const topics = await database.query(`SELECT
-        kbt.id,
-        kbt.tag,
-        kbt.knowledge_source,
-        ks.name as knowledge_source_name,
-        kot.object as object_type
-        FROM knowledge_base_tags kbt
-        JOIN knowledge_sources ks ON ks.id = kbt.knowledge_source
-        JOIN knowledge_object_types kot ON kot.id = ks.object_type;`);
-
+        const topics = await database.getTopics();
 
         // Compose the message
         const guidelines = [

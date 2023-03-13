@@ -1,5 +1,17 @@
 module.exports = {
-    addKnowledge: (data) => {
+    addKnowledge: async (data) => {
+
+        const knowledge_source_options = await data.knowledge_sources.map((knowledge_source) => {
+            return {
+                "text": {
+                    "type": "plain_text",
+                    "text": knowledge_source.name,
+                    "emoji": true
+                },
+                "value": `${knowledge_source.id}`
+            }
+        });
+
         const view = {
             "type": "modal",
             "submit": {
@@ -23,7 +35,7 @@ module.exports = {
                     "block_id": "tag",
                     "element": {
                         "type": "plain_text_input",
-                        "action_id": "plain_text_input-action",
+                        "action_id": "tag",
                         "initial_value": `${data.tag}`
                     },
                     "label": {
@@ -42,48 +54,9 @@ module.exports = {
                     },
                     "element": {
                         "type": "radio_buttons",
-                        "options": [
-                            {
-                                "text": {
-                                    "type": "plain_text",
-                                    "text": "Airbnb listing",
-                                    "emoji": true
-                                },
-                                "value": "1"
-                            },
-                            {
-                                "text": {
-                                    "type": "plain_text",
-                                    "text": "Coda HAR guideline",
-                                    "emoji": true
-                                },
-                                "value": "2"
-                            },
-                            {
-                                "text": {
-                                    "type": "plain_text",
-                                    "text": "Coda GES Inspection",
-                                    "emoji": true
-                                },
-                                "value": "3"
-                            },
-                            {
-                                "text": {
-                                    "type": "plain_text",
-                                    "text": "Trello Partnership Management",
-                                    "emoji": true
-                                },
-                                "value": "4"
-                            },
-                            {
-                                "text": {
-                                    "type": "plain_text",
-                                    "text": "Property notes",
-                                    "emoji": true
-                                },
-                                "value": "5"
-                            }
-                        ]
+                        "action_id": "knowledge_source",
+                        "initial_option": knowledge_source_options.find(option => option.text.text === data.knowledge_source),
+                        "options": knowledge_source_options
                     }
                 },
                 {
@@ -91,7 +64,7 @@ module.exports = {
                     "block_id": "object_name",
                     "element": {
                         "type": "plain_text_input",
-                        "action_id": "plain_text_input-action",
+                        "action_id": "object_name",
                         "initial_value": `${data.object_id}/${data.object_name}`
                     },
                     "label": {
@@ -110,11 +83,15 @@ module.exports = {
                     },
                     "element": {
                         "type": "plain_text_input",
+                        "action_id": "answer",
                         "multiline": true
                     }
                 }
             ]
         }
-        return view;
+
+        // console.log('[Views]', 'addKnowledge')
+        // console.dir(view, { depth: null })
+        return view
     }
 }

@@ -32,6 +32,7 @@ app.message(middleware.noOrphanMessage, middleware.topicAnalyzer, router.topicRo
 app.action({ type: 'block_actions' }, router.actionRouter);
 
 // Listens to view submissions
+app.view({ type: "view_submission" }, router.viewSubmissionRouter);
 app.view({ callback_id: "reply_message" }, views.submitReplyMessage);
 
 // Listens to events
@@ -42,6 +43,7 @@ app.event('app_mention', middleware.topicAnalyzer, router.topicRouter);
 app.error((error) => {
   // Check the details of the error to handle cases where you should retry sending a message or stop the app
   console.error(error);
+  console.dir(error.data, { depth: null });
 });
 
 // Listens to incoming webhooks

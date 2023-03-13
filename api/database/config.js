@@ -1,6 +1,4 @@
 const mysql = require('mysql2/promise');
-const { getKnowledgeSources } = require('./getKnowledgeSources');
-const { getTopics } = require('./getTopics');
 
 module.exports = {
     query: async (query) => {
@@ -12,7 +10,5 @@ module.exports = {
         });
         const [rows, fields] = await connection.execute(query);
         return rows;
-    },
-    getKnowledgeSources,
-    getTopics
+    }
 }
