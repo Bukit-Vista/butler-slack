@@ -3,8 +3,9 @@ const database = require('../api/database');
 
 module.exports = {
     topicAnalyzer: async (payload) => {
-        // User's question
-        const question = payload.body.event.text;
+        // User's question, remove the @mention from text
+        const question = payload.body.event.text.replace(`<@${payload.context.botUserId}>`, '').trim();
+
         payload.logger.info('topicAnalyzer', question);
 
         // Fetch list of available topics
@@ -28,6 +29,7 @@ module.exports = {
             "'id' key which is and integer as the ID of the topic.",
             "Your response will **always** the tag from the supplied list of topics",
             "If the tag is not in the list of topics, you will reply with id: 0, and 'tag' with the new tag name",
+            "If the tag you detected is slightly different from the list of topics, you will reply with id: 0, and 'tag' with the new tag name",
             "Your response will **never** contain just a text message, it will always contain a JSON object",
             "The list of topics is:",
             ...topics.map(topic => `${topic.id}. ${topic.tag}`)
@@ -76,6 +78,7 @@ module.exports = {
                 const filteredTopics = await topics.filter(topic => topic.id === result.id);
 
                 payload.body.topic = filteredTopics[0];
+                payload.body.topic.question = question;
                 payload.body.newTopic = result;
             } catch (e) {
                 payload.body.topic = null

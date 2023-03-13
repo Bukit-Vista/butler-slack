@@ -1,6 +1,7 @@
 module.exports = {
     addKnowledge: async function (payload) {
         const answer = payload.body.answer;
+        answer.question = payload.body.topic.question;
         payload.logger.info('addKnowledge', answer.tag)
 
         await payload.say({
@@ -27,7 +28,7 @@ module.exports = {
                                 "text": "Add to knowledge base",
                                 "emoji": true
                             },
-                            "value": `${answer.knowledge_source}/${answer.tag}/${answer.object_id}/${answer.object_name}`,
+                            "value": JSON.stringify(answer),
                             "action_id": "views.open:add_knowledge"
                         }
                     ]

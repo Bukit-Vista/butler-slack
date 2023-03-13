@@ -1,6 +1,7 @@
 const { submit, close } = require('./modalActions');
 const { title } = require('./modalTitle');
 const { inspectionDetails, problemSolving, generalInspection } = require('./inspectionDetails');
+const { addKnowledge } = require('./addKnowledge');
 
 const modalBuilder = {
     submit,
@@ -8,7 +9,8 @@ const modalBuilder = {
     title,
     inspectionDetails,
     problemSolving,
-    generalInspection
+    generalInspection,
+    addKnowledge
 }
 
 module.exports = modalBuilder;

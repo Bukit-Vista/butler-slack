@@ -32,7 +32,7 @@ module.exports = {
                         await controller.views.showInspectionDetails(payload, loading_modal);
                         break;
                     case 'add_knowledge':
-
+                        await controller.views.addKnowledge(payload, loading_modal);
                         break;
                     default:
                         break;

@@ -40,7 +40,7 @@ module.exports = {
             await controller.message.sendReply(payload);
 
             // If knowledge not found, send to add knowledge controller
-            if (!payload.body.answer.knowledge_found) {
+            if (payload.body.answer && !payload.body.answer.knowledge_found) {
 
                 // Offer user to create new topic
                 await controller.message.addKnowledge(payload);

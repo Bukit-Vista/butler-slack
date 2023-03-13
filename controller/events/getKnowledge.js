@@ -13,6 +13,7 @@ module.exports = {
             } else {
                 return {
                     answer: `Osai error: ${response.msg}`,
+                    knowledge_found: true,
                     knowledge_source_name: "",
                     object_type: "",
                     object_name: "",
