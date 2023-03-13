@@ -31,6 +31,9 @@ module.exports = {
                     case 'inspection_details':
                         await controller.views.showInspectionDetails(payload, loading_modal);
                         break;
+                    case 'add_knowledge':
+
+                        break;
                     default:
                         break;
                 }

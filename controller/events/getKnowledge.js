@@ -9,9 +9,7 @@ module.exports = {
             if (response && !response.error) {
                 const data = response.data[0];
 
-                if (data.knowledge_found) {
-                    return data
-                }
+                return data
             } else {
                 return {
                     answer: `Osai error: ${response.msg}`,

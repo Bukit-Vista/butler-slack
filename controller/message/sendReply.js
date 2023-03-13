@@ -1,8 +1,9 @@
 const { object, string } = require('yup');
 
 module.exports = {
-    sendReply: async function (payload, answer) {
+    sendReply: async function (payload) {
         const topic = payload.body.topic;
+        const answer = payload.body.answer;
         payload.logger.info('sendReply', answer.answer)
 
         let answerSchema = object({

@@ -11,18 +11,21 @@ module.exports = {
         if (topic) {
             payload.logger.info('topicRouter', topic.tag, topic.knowledge_source_name);
 
+            // Show loading
+            const loadingMessage = await controller.message.loadingMessage(payload);
+
             // Switch on the action type
 
             switch (topic.knowledge_source_name) {
                 case 'airbnb-listing':
                     // Get knowledge from database
-                    answer = await controller.events.getKnowledge(payload);
+                    payload.body.answer = await controller.events.getKnowledge(payload);
                     break;
                 case 'trello-partnership':
-                    answer = await controller.events.getPartnershipKnowledge(payload);
+                    payload.body.answer = await controller.events.getPartnershipKnowledge(payload);
                     break;
                 case 'coda-har-guideline':
-                    answer = await controller.events.getHarGeneralKnowledge(payload);
+                    payload.body.answer = await controller.events.getHarGeneralKnowledge(payload);
                     break;
                 case 'unknown':
                     break;
@@ -30,8 +33,18 @@ module.exports = {
                     break;
             }
 
+            // Stop loading message
+            await controller.message.loadingFinishedMessage(payload, loadingMessage);
+
             // Send reply message
-            await controller.message.sendReply(payload, answer);
+            await controller.message.sendReply(payload);
+
+            // If knowledge not found, send to add knowledge controller
+            if (!payload.body.answer.knowledge_found) {
+
+                // Offer user to create new topic
+                await controller.message.addKnowledge(payload);
+            }
         } else {
 
             // Offer user to create new topic
