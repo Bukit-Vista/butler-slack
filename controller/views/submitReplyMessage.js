@@ -3,7 +3,6 @@ const blocks = require('../../view/blocks');
 
 module.exports = {
     submitReplyMessage: async ({ body, ack, logger, client }) => {
-        await ack();
         logger.info(body.user.id, "sending reply message");
         // logger.info(body);
         const { booking_id, email, message_ts, channel_id } = JSON.parse(body.view.private_metadata);

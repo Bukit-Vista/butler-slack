@@ -2,8 +2,6 @@ const blocks = require('../../view/blocks');
 
 module.exports = {
     ignoreMessage: async ({ body, ack, client, logger }) => {
-        // Acknowledge the action
-        await ack();
 
         console.log("ignoreMessage", body.message.ts);
         try {

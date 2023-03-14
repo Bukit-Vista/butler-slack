@@ -27,6 +27,9 @@ module.exports = {
                 case 'coda-har-guideline':
                     payload.body.answer = await controller.events.getHarGeneralKnowledge(payload);
                     break;
+                case 'available-unit-search':
+                    // Send not supported message
+                    break;
                 case 'unknown':
                     break;
                 default:

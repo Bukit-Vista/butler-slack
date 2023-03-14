@@ -5,10 +5,6 @@ const blocks = require('../../view/blocks');
 module.exports = {
   replyMessage: async ({ client, body, ack, logger }) => {
     logger.info("action.replyMessage")
-    // logger.info(body)
-
-    // Acknowledge the action
-    await ack();
 
     // logger.info(body)
     const booking_id = body.actions[0].value.split('/')[0];

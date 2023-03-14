@@ -2,8 +2,6 @@ const modal = require('../../view/modal');
 
 module.exports = {
     loadingModal: async (payload) => {
-        // Acknowledge the action
-        await payload.ack();
 
         payload.logger.info("loadingModal", payload.body.actions[0].text.text);
         try {

@@ -1,6 +1,7 @@
 const { submit, close } = require('./modalActions');
 const { title } = require('./modalTitle');
-const { inspectionDetails, problemSolving, generalInspection } = require('./inspectionDetails');
+const { inspectionDetails } = require('./inspectionDetails');
+const { inspectionReport } = require('./inspectionReport');
 const { addKnowledge } = require('./addKnowledge');
 
 const modalBuilder = {
@@ -8,8 +9,7 @@ const modalBuilder = {
     close,
     title,
     inspectionDetails,
-    problemSolving,
-    generalInspection,
+    inspectionReport,
     addKnowledge
 }
 

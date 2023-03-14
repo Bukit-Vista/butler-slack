@@ -1,50 +1,58 @@
-const middleware = require('../middleware');
 const controller = require('../controller');
-const coda = require('../api/coda');
-const actions = require('../controller/actions');
 
 module.exports = {
     actionRouter: async (payload) => {
-        payload.logger.info('actionRouter', payload.payload.action_id)
+        payload.logger.info('actionRouter', payload.action.type, payload.action.action_id)
 
-        // Switch on action_id
-        const action_id = payload.payload.action_id.split(':')[0];
-        const action_id_type = payload.payload.action_id.split(':')[1];
-        switch (action_id) {
-            case 'reply_message':
-                actions.replyMessage(payload);
-                break;
-            case 'ignore_message':
-                actions.ignoreMessage(payload);
-                break;
-            case 'chat.postMessage':
-                actions.ignoreMessage(payload);
-                break;
-            case 'chat.postEphemeral':
-                actions.ignoreMessage(payload);
-                break;
-            case 'views.open':
-                const loading_modal = await controller.actions.loadingModal(payload);
+        // Acknowledge
+        await payload.ack();
 
-                // Switch on action_id_type
-                switch (action_id_type) {
-                    case 'inspection_details':
-                        await controller.views.showInspectionDetails(payload, loading_modal);
+        // Switch on action type
+        switch (payload.action.type) {
+            case 'button':
+                // Switch on action_id
+                const action_id = payload.payload.action_id.split(':')[0];
+                const action_id_type = payload.payload.action_id.split(':')[1];
+                switch (action_id) {
+                    case 'reply_message':
+                        controller.actions.replyMessage(payload);
                         break;
-                    case 'add_knowledge':
-                        await controller.views.addKnowledge(payload, loading_modal);
+                    case 'ignore_message':
+                        controller.actions.ignoreMessage(payload);
+                        break;
+                    case 'chat.postMessage':
+                        controller.actions.ignoreMessage(payload);
+                        break;
+                    case 'chat.postEphemeral':
+                        controller.actions.ignoreMessage(payload);
+                        break;
+                    case 'views.open':
+                        const loading_modal = await controller.actions.loadingModal(payload);
+
+                        // Switch on action_id_type
+                        switch (action_id_type) {
+                            case 'inspection_details':
+                                await controller.views.showInspectionDetails(payload, loading_modal);
+                                break;
+                            case 'add_knowledge':
+                                await controller.views.addKnowledge(payload, loading_modal);
+                                break;
+                            default:
+                                break;
+                        }
+
+                        break;
+                    case 'views.update':
+                        controller.views.showInspectionReport(payload);
                         break;
                     default:
                         break;
                 }
-
                 break;
-            case 'views.update':
-                actions.ignoreMessage(payload);
+            case 'block_actions':
                 break;
             default:
                 break;
         }
-
     }
 }
